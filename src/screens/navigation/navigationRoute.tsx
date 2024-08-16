@@ -15,5 +15,11 @@ export const NavigationRoute = {
     Goals:'Goals',
     Prefer1:'Prefer1',
     Prefer2:'Prefer2',
+    ForYou:'ForYou',
+    Library:'Library',
+    Create:'Create',
+    Profile:'Profile',
+    Explore:'Explore',
+    bottomNavigation:'bottomNavigation'
   };
   

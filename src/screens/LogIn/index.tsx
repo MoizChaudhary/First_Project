@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  StatusBar,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Image, StatusBar} from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useState} from 'react';
@@ -12,11 +6,26 @@ import {TextInput} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {Images} from '../../assets/images';
 import styles from './styles';
+import auth from '@react-native-firebase/auth';
+import firebase from '@react-native-firebase/app';
+import database from "@react-native-firebase/database";
+// import database from 'react-native-firebase/database';
 const LogIn = ({onPress}: any) => {
   const navigation: any = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
+  // const handleLogin = async () => {
+  //   try {
+  //     const isUserCreated = await auth().createUserWithEmailAndPassword(
+  //       email,
+  //       password,
+  //     );
+  //     console.log(isUserCreated);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <View style={styles.MainView}>
       <View>
@@ -34,6 +43,7 @@ const LogIn = ({onPress}: any) => {
             mode="outlined"
             style={styles.emailD}
             label="Email address"
+            value={email}
             theme={{
               colors: {primary: '#1e90ff', secondary: 'red'},
             }}
@@ -45,6 +55,7 @@ const LogIn = ({onPress}: any) => {
             mode="outlined"
             style={styles.passwordD}
             secureTextEntry={true}
+            value={password}
             right={
               <TextInput.Icon
                 icon={passwordVisible ? 'eye' : 'eye-slash'}
@@ -67,9 +78,7 @@ const LogIn = ({onPress}: any) => {
         </TouchableOpacity>
         <View>
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Gender');
-            }}
+            onPress={() => onPress}
             style={styles.button}>
             <Text style={styles.buttonText}>Sign In</Text>
           </TouchableOpacity>

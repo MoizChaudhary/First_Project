@@ -18,13 +18,19 @@ import Age from '../Age';
 import Goals from '../Goals';
 import Prefer1 from '../Prefer1';
 import Prefer2 from '../Prefer2';
+import ForYou from '../ForYou';
+import Explore from '../Explore';
+import Create from '../Create';
+import Library from '../Library';
+import Profile from '../Profile';
+import bottomNavigation from '../../bottomNavigation/bottomNavigation';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"Goals"}
+        initialRouteName={"LogIn"}
         screenOptions={{
           headerShown: false,
         }}>
@@ -44,6 +50,16 @@ const Navigator = () => {
         <Stack.Screen name={NavigationRoute.Goals} component={Goals} />
         <Stack.Screen name={NavigationRoute.Prefer1} component={Prefer1} />
         <Stack.Screen name={NavigationRoute.Prefer2} component={Prefer2} />
+        <Stack.Screen name={NavigationRoute.ForYou} component={ForYou} />
+        <Stack.Screen name={NavigationRoute.Explore} component={Explore} />
+        <Stack.Screen name={NavigationRoute.Create} component={Create} />
+        <Stack.Screen name={NavigationRoute.Library} component={Library} />
+        <Stack.Screen name={NavigationRoute.Profile} component={Profile} />
+        <Stack.Screen name={NavigationRoute.bottomNavigation} component={bottomNavigation} />
+
+
+
+
 
 
       </Stack.Navigator>

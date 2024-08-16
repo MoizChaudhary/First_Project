@@ -79,7 +79,7 @@ const Prefer2 = ({onPress}: any) => {
       <View style={styles.Btn_View}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Prefer2');
+            navigation.navigate('bottomNavigation');
           }}
           style={styles.button}>
           <Text style={styles.buttonText}>Continue</Text>
