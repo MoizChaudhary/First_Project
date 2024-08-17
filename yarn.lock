@@ -2994,7 +2994,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-firebase/app@npm:20.4.0":
+"@react-native-firebase/app@npm:^20.4.0":
   version: 20.4.0
   resolution: "@react-native-firebase/app@npm:20.4.0"
   dependencies:
@@ -3829,7 +3829,7 @@ __metadata:
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
     "@react-native-community/checkbox": ^0.5.17
-    "@react-native-firebase/app": 20.4.0
+    "@react-native-firebase/app": ^20.4.0
     "@react-native-firebase/auth": 20.4.0
     "@react-native-firebase/database": 20.4.0
     "@react-native-firebase/firestore": 20.4.0
