@@ -8,24 +8,32 @@ import {Images} from '../../assets/images';
 import styles from './styles';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
-import database from "@react-native-firebase/database";
-// import database from 'react-native-firebase/database';
 const LogIn = ({onPress}: any) => {
   const navigation: any = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
-  // const handleLogin = async () => {
-  //   try {
-  //     const isUserCreated = await auth().createUserWithEmailAndPassword(
-  //       email,
-  //       password,
-  //     );
-  //     console.log(isUserCreated);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const handleLogin = async () => {
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User Signed In!');
+        navigation.navigate('bottomNavigation');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(setErrorMessage);
+      });
+  };
   return (
     <View style={styles.MainView}>
       <View>
@@ -76,10 +84,12 @@ const LogIn = ({onPress}: any) => {
           }}>
           <Text style={styles.Forget_Text}>Forget Password?</Text>
         </TouchableOpacity>
+        {errorMessage && (
+          <Text style={{color: 'red', marginBottom: 20}}>{errorMessage}</Text>
+        )}
+
         <View>
-          <TouchableOpacity
-            onPress={() => onPress}
-            style={styles.button}>
+          <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.buttonText}>Sign In</Text>
           </TouchableOpacity>
         </View>
