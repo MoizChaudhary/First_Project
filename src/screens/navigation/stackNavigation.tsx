@@ -30,7 +30,7 @@ const Navigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"SignUp"}
+        initialRouteName={"SplashScreen"}
         screenOptions={{
           headerShown: false,
         }}>

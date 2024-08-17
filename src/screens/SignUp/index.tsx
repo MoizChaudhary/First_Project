@@ -20,7 +20,7 @@ const SignUp = ({onPress}: any) => {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User account created');
-        navigation.navigate('LogIn');
+        navigation.navigate('Gender');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
