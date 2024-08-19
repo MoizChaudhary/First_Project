@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {MaleSelected, MaleUnSelected} from '../../assets/svg/male';
 import {FemaleSelected, FemaleUnSelected} from '../../assets/svg/female';
 import styles from './styles';
+import Btn from '../../components/btn';
 const Gender = ({onPress}: any) => {
   const navigation: any = useNavigation();
   const [maleSelected, setMaleSelected] = useState(false);
@@ -89,13 +90,12 @@ const Gender = ({onPress}: any) => {
         </View>
       </View>
       <View style={{justifyContent: 'flex-end'}}>
-        <TouchableOpacity
+        <Btn
+          title={'Continue'}
           onPress={() => {
             navigation.navigate('Age');
           }}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
+        />
       </View>
     </View>
   );

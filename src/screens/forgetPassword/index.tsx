@@ -6,6 +6,7 @@ import {TextInput} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {Images} from '../../assets/images';
 import styles from './styles';
+import Btn from '../../components/btn';
 const ForgetPassword = ({onPress}: any) => {
   const navigation: any = useNavigation();
   const [email, setEmail] = useState('');
@@ -33,7 +34,14 @@ const ForgetPassword = ({onPress}: any) => {
             onChangeText={text => setEmail(text)}
           />
         </View>
-        <View>
+        <Btn
+          title={'Verify'}
+          onPress={() => {
+            navigation.navigate('Otp');
+          }}
+        />
+
+        {/* <View>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('Otp');
@@ -41,7 +49,7 @@ const ForgetPassword = ({onPress}: any) => {
             style={styles.button}>
             <Text style={styles.buttonText}>Verify</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );

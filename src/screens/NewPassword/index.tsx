@@ -13,6 +13,8 @@ import {TextInput} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {Images} from '../../assets/images';
 import styles from './styles';
+import PasswordField from '../../components/PasswordField';
+import Btn from '../../components/btn';
 const NewPassword = ({onPress}: any) => {
   const navigation: any = useNavigation();
   const [passwordVisible, setPasswordVisible] = useState(true);
@@ -47,46 +49,22 @@ const NewPassword = ({onPress}: any) => {
       </View>
       <ScrollView>
         <View>
-          <View>
-            <TextInput
-              mode="outlined"
-              style={styles.passwordD}
-              secureTextEntry={true}
-              right={
-                <TextInput.Icon
-                  icon={passwordVisible ? 'eye' : 'eye-slash'}
-                  onPress={() => setPasswordVisible(!passwordVisible)}
-                />
-              }
-              label="New Password"
-              theme={{
-                colors: {primary: '#1e90ff'},
-              }}
-              onChangeText={text => setPassword(text)}
-            />
-          </View>
-          <View>
-            <TextInput
-              mode="outlined"
-              style={styles.passwordD}
-              secureTextEntry={true}
-              right={
-                <TextInput.Icon
-                  icon={passwordVisible ? 'eye' : 'eye-slash'}
-                  onPress={() => setPasswordVisible(!passwordVisible)}
-                />
-              }
-              label="Confirm Password"
-              theme={{colors: {primary: '#1e90ff'},}}
-              onChangeText={text => setConfirmPasswrod(text)}
-            />
-          </View>
-
-          <View>
-            <TouchableOpacity onPress={Password} style={styles.button}>
-              <Text style={styles.buttonText}>Reset Password</Text>
-            </TouchableOpacity>
-          </View>
+          <PasswordField
+            value={password}
+            label={'New Password'}
+            onChangeText={(text: any) => setPassword(text)}
+          />
+          <PasswordField
+            value={password}
+            label={'Confirm Password'}
+            onChangeText={(text: any) => setPassword(text)}
+          />
+          <Btn
+            title={'Reset password'}
+            onPress={() => {
+              navigation.navigate('LogIn');
+            }}
+          />
           {messageError ? (
             <View style={styles.MessageError_View}>
               <Image source={Images.Cross} style={styles.MessageError_Img} />

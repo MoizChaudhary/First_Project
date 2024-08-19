@@ -4,6 +4,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {Images} from '../../assets/images';
 import styles from './styles';
+import Btn from '../../components/btn';
 const OnBoarding3 = ({onPress}: any) => {
   const navigation: any = useNavigation();
   return (
@@ -45,15 +46,12 @@ const OnBoarding3 = ({onPress}: any) => {
           posuere
         </Text>
       </View>
-      <View>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('OnBoarding4');
-          }}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      </View>
+      <Btn
+        title={'Next'}
+        onPress={() => {
+          navigation.navigate('OnBoarding4');
+        }}
+      />
     </View>
   );
 };

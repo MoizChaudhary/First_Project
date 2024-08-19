@@ -7,6 +7,7 @@ import {Images} from '../../assets/images';
 import {OtpInput} from 'react-native-otp-entry';
 import * as Yup from 'yup';
 import styles from './styles';
+import Btn from '../../components/btn';
 const Otp = ({onPress}: any) => {
   const navigation: any = useNavigation();
   const otpSchema = Yup.number().required('OTP is required');
@@ -90,11 +91,7 @@ const Otp = ({onPress}: any) => {
             <Text style={styles.Send_Text}>send again</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          <TouchableOpacity onPress={verifyOtp} style={styles.button}>
-            <Text style={styles.buttonText}>Verify</Text>
-          </TouchableOpacity>
-        </View>
+        <Btn title={'Verify'} onPress={verifyOtp} />
         {messageError ? (
           <View style={styles.Incorrect_View}>
             <Image source={Images.Cross} style={styles.Incorrect_Img} />

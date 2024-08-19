@@ -1,13 +1,8 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {View, Text, StatusBar, TouchableOpacity, FlatList} from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
+import Btn from '../../components/btn';
 const DATA = [
   {
     id: 'age1',
@@ -93,13 +88,12 @@ const Age = ({onPress}: any) => {
       </View>
 
       <View style={styles.Button_View}>
-        <TouchableOpacity
+        <Btn
+          title={'Continue'}
           onPress={() => {
             navigation.navigate('Goals');
           }}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
+        />
       </View>
     </View>
   );

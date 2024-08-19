@@ -12,6 +12,7 @@ import {Images} from '../../assets/images';
 import {useNavigation} from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
 import styles from './styles';
+import Btn from '../../components/btn';
 const DATA = [
   {id: '0', title: 'Be consistent in learning', image: Images.G1},
   {id: '1', title: 'Understand the Quran', image: Images.G2},
@@ -113,13 +114,12 @@ const Goals = ({onPress}: any) => {
         />
       </ScrollView>
       <View style={styles.Btn_View}>
-        <TouchableOpacity
+        <Btn
+          title={'Continue'}
           onPress={() => {
             navigation.navigate('Prefer1');
           }}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
+        />
       </View>
     </View>
   );
