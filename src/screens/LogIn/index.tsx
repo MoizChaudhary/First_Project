@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, Image, StatusBar} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -10,6 +10,7 @@ import InputField from '../../components/TextInput';
 import PasswordField from '../../components/PasswordField';
 import Btn from '../../components/btn';
 import SocialIcons from '../../components/GFBA';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const LogIn = ({onPress}: any) => {
   const navigation: any = useNavigation();
@@ -17,6 +18,37 @@ const LogIn = ({onPress}: any) => {
   const [password, setPassword] = useState('');
   // const [passwordVisible, setPasswordVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '620361642218-29ocdmhlersvmga2qa23r6udi851oaia.apps.googleusercontent.com',
+    });
+  }, []);
+  async function onGoogleButtonPress() {
+    try {
+      // Check if your device supports Google Play
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+
+      // Get the user's ID token
+      const {idToken} = await GoogleSignin.signIn();
+
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+      // Sign-in the user with the credential
+      await auth().signInWithCredential(googleCredential);
+
+      // Navigate to "For You" screen
+      navigation.navigate('ForYou');
+
+      // Log success message
+      console.log('Logged in successfully');
+    } catch (error) {
+      console.error('Google Sign-In Error:', error);
+      //@ts-ignore
+      setErrorMessage('Google Sign-In failed. Please try again.');
+    }
+  }
 
   const handleLogin = async () => {
     auth()
@@ -77,6 +109,9 @@ const LogIn = ({onPress}: any) => {
         <SocialIcons
           onPress={() => {
             navigation.navigate('SignUp');
+          }}
+          onGoogle={() => {
+            onGoogleButtonPress();
           }}
           text={'Dont have an Account?'}
           link={'Sign up'}

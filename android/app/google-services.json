@@ -12,7 +12,20 @@
           "package_name": "com.codistan_project"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "620361642218-ufa7b0obv31iiujabdukg1rt1iit4idc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codistan_project",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "620361642218-29ocdmhlersvmga2qa23r6udi851oaia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCiH9KJuqIQsoChyPMbg_Qdk7IeRgVoP0Y"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620361642218-29ocdmhlersvmga2qa23r6udi851oaia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
