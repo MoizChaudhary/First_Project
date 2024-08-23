@@ -61,7 +61,7 @@ const SignUp = ({onPress}: any) => {
       await auth().signInWithCredential(googleCredential);
 
       // Navigate to "For You" screen
-      navigation.navigate('ForYou');
+      navigation.navigate('Gender');
 
       // Log success message
       console.log('Logged in successfully');

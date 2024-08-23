@@ -3,11 +3,20 @@ import React from 'react';
 import {Images} from '../../assets/images/index';
 import {useEffect} from 'react';
 import styles from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const SplashScreen = ({navigation}: any) => {
   useEffect(() => {
-    setTimeout(() => {
-      navigation.replace('OnBoarding1');
-    }, 3000);
+    setTimeout(async () => {
+      const data = await AsyncStorage.getItem('userInfo');
+
+      if (data === null || data === undefined || data === '') {
+        // If data is null, undefined, or an empty string
+        navigation.replace('OnBoarding1');
+      } else {
+        // If data exists and is not an empty string
+        navigation.replace('bottomNavigation');
+      }
+    }, 5000);
   }, []);
   return (
     <View style={styles.MainView}>

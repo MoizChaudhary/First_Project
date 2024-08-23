@@ -1,8 +1,11 @@
 import React, {useEffect} from 'react';
 import Navigator from './src/screens/navigation/stackNavigation';
 import firestore from '@react-native-firebase/firestore';
-
+import BottomSheetModalProvide from '@gorhom/bottom-sheet';
 import {SafeAreaView} from 'react-native';
+// import 'react-native-gesture-handler';
+// // import {GestureHandlerRootView} from 'react-native-gesture-handler';
+// import 'react-native-reanimated';
 
 const App = () => {
   useEffect(() => {

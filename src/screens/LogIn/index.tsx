@@ -11,6 +11,7 @@ import PasswordField from '../../components/PasswordField';
 import Btn from '../../components/btn';
 import SocialIcons from '../../components/GFBA';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LogIn = ({onPress}: any) => {
   const navigation: any = useNavigation();
@@ -36,39 +37,75 @@ const LogIn = ({onPress}: any) => {
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
       // Sign-in the user with the credential
-      await auth().signInWithCredential(googleCredential);
+      const userCredential = await auth().signInWithCredential(
+        googleCredential,
+      );
+
+      // Get the user object
+      const user = userCredential.user;
+
+      // Extract additional user information
+      const userInfo = {
+        uid: user.uid,
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      };
+
+      // Store the user information in AsyncStorage
+      await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
 
       // Navigate to "For You" screen
-      navigation.navigate('ForYou');
+      navigation.navigate('bottomNavigation');
 
       // Log success message
-      console.log('Logged in successfully');
+      console.log('Logged in successfully, User Info:', userInfo);
     } catch (error) {
       console.error('Google Sign-In Error:', error);
-      //@ts-ignore
+      // @ts-ignore
       setErrorMessage('Google Sign-In failed. Please try again.');
     }
   }
 
   const handleLogin = async () => {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User Signed In!');
-        navigation.navigate('bottomNavigation');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
+    try {
+      // Sign in the user with email and password
+      const userCredential = await auth().signInWithEmailAndPassword(
+        email,
+        password,
+      );
 
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
+      // Get the user object
+      const user = userCredential.user;
 
-        console.error(setErrorMessage);
-      });
+      // Extract additional user information
+      const userInfo = {
+        uid: user.uid,
+        displayName: user.displayName, // This might be null if not set by the user
+        email: user.email, // This might be null if not set by the user
+      };
+
+      // Store the user information in AsyncStorage
+      await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+      console.log('User Signed In and Info Stored!');
+
+      // Navigate to "For You" screen
+      navigation.navigate('bottomNavigation');
+    } catch (error: any) {
+      // Handle errors here
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('That email address is already in use!');
+      } else if (error.code === 'auth/invalid-email') {
+        console.log('That email address is invalid!');
+      } else {
+        console.error('Error signing in:', error);
+        // Optional: Display user-friendly error message
+        // setErrorMessage('Login failed. Please try again.');
+      }
+    }
   };
+
   return (
     <View style={styles.MainView}>
       <View>

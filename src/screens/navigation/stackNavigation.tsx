@@ -24,13 +24,15 @@ import Create from '../Create';
 import Library from '../Library';
 import Profile from '../Profile';
 import bottomNavigation from '../../bottomNavigation/bottomNavigation';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
   return (
     <NavigationContainer>
+      {/* <BottomSheetModalProvider> */}
       <Stack.Navigator
-        initialRouteName={'LogIn'}
+        initialRouteName={'SplashScreen'}
         screenOptions={{
           headerShown: false,
         }}>
@@ -84,6 +86,7 @@ const Navigator = () => {
           component={bottomNavigation}
         />
       </Stack.Navigator>
+      {/* </BottomSheetModalProvider> */}
     </NavigationContainer>
   );
 };
