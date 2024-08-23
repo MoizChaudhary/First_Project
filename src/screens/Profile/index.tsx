@@ -5,7 +5,7 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
-  Button,
+  ActivityIndicator, // Import ActivityIndicator
 } from 'react-native';
 import React, {useState, useEffect, useCallback, useMemo, useRef} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -20,8 +20,10 @@ import BottomsheetComp from '../../components/bottomSheet_Comp';
 import Btn from '../../components/btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+
 const Proflie = (onPress: any) => {
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigation: any = useNavigation();
 
   useEffect(() => {
@@ -33,6 +35,7 @@ const Proflie = (onPress: any) => {
 
     return () => clearInterval(interval);
   }, []);
+
   const resetProgress = () => {
     setProgress(0);
   };
@@ -42,8 +45,10 @@ const Proflie = (onPress: any) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['3%', '50%', '60%'], []);
+
   const handleOpenPress = () => {
     // @ts-ignore
     bottomSheetRef.current?.expand();
@@ -51,6 +56,7 @@ const Proflie = (onPress: any) => {
 
   const handleLogout = async () => {
     console.log('Clicked');
+    setLoading(true); // Set loading to true
     try {
       // Clear the user information from AsyncStorage
       await AsyncStorage.removeItem('userInfo');
@@ -65,6 +71,15 @@ const Proflie = (onPress: any) => {
       console.error('Error signing out:', error);
       // Optionally, display a user-friendly error message
       setErrorMessage('Logout failed. Please try again.');
+    } finally {
+      setLoading(false); // Set loading to false
+    }
+    function auth() {
+      throw new Error('Function not implemented.');
+    }
+
+    function setErrorMessage(arg0: string) {
+      throw new Error('Function not implemented.');
     }
   };
 
@@ -239,7 +254,6 @@ const Proflie = (onPress: any) => {
               </Text>
             </View>
           </View>
-          {/* <Button title="Reset Progress" onPress={resetProgress} /> */}
         </View>
 
         <View>
@@ -287,7 +301,6 @@ const Proflie = (onPress: any) => {
                   marginHorizontal: 30,
                   textAlign: 'center',
                   marginVertical: 10,
-                  // justifyContent: 'center',
                 }}>
                 To get new recommendations, you need to adjust your goals
               </Text>
@@ -313,11 +326,9 @@ const Proflie = (onPress: any) => {
                   marginBottom: 15,
                   backgroundColor: '#EFEFEF',
                   borderColor: '#D1D1D1',
-                  // justifyContent: 'center',
                 }}>
                 <Text style={{color: '#191C20'}}>Adjust daily Goal</Text>
               </TouchableOpacity>
-              {/* <Button title="Reset Progress" onPress={resetProgress} /> */}
             </View>
           </Modal>
         </View>
@@ -335,14 +346,10 @@ const Proflie = (onPress: any) => {
 
           <BottomsheetComp Title={'Notifications'} />
           <BottomsheetComp Title={'Gift Headway'} />
-
           <BottomsheetComp Title={'Language Selection'} />
-
           <BottomsheetComp Title={'Privacy Policy'} />
           <BottomsheetComp Title={'Terms & Conditions'} />
-
           <BottomsheetComp Title={'Subscription Terms'} />
-
           <BottomsheetComp Title={'Manage Subscription'} />
           <BottomsheetComp Title={'Playback settings'} />
           <BottomsheetComp Title={'Delete account'} />
@@ -366,6 +373,13 @@ const Proflie = (onPress: any) => {
           />
         </ScrollView>
       </BottomSheet>
+
+      {/* Show ActivityIndicator when loading */}
+      {loading && (
+        <View style={styles.overlay}>
+          <ActivityIndicator size="large" color="#0066ff" />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -390,16 +404,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
   },
   contentContainer: {
-    // flex: 1,
-    // alignItems: 'center',
     marginHorizontal: 20,
     marginTop: 10,
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
-function auth() {
-  throw new Error('Function not implemented.');
-}
-
-function setErrorMessage(arg0: string) {
-  throw new Error('Function not implemented.');
-}
