@@ -22,4 +22,5 @@ export const NavigationRoute = {
   Explore: 'Explore',
   bottomNavigation: 'bottomNavigation',
   Subscription: 'Subscription',
+  DarkMode: 'DarkMode',
 };

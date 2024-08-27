@@ -26,74 +26,80 @@ import Profile from '../Profile';
 import bottomNavigation from '../../bottomNavigation/bottomNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import Subscription from '../Subscription';
+import DarkMode from '../DarkMode';
+import {ThemeProvider} from '../../ContextAPI/ThemeContext';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
   return (
-    <NavigationContainer>
-      {/* <BottomSheetModalProvider> */}
-      <Stack.Navigator
-        initialRouteName={'SplashScreen'}
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen
-          name={NavigationRoute.SplashScreen}
-          component={SplashScreen}
-        />
-        <Stack.Screen
-          name={NavigationRoute.OnBoarding1}
-          component={OnBoarding1}
-        />
-        <Stack.Screen
-          name={NavigationRoute.OnBoarding2}
-          component={OnBoarding2}
-        />
-        <Stack.Screen
-          name={NavigationRoute.OnBoarding3}
-          component={OnBoarding3}
-        />
-        <Stack.Screen
-          name={NavigationRoute.OnBoarding4}
-          component={OnBoarding4}
-        />
-        <Stack.Screen
-          name={NavigationRoute.GetStarted}
-          component={GetStarted}
-        />
-        <Stack.Screen name={NavigationRoute.SignUp} component={SignUp} />
-        <Stack.Screen name={NavigationRoute.LogIn} component={LogIn} />
-        <Stack.Screen
-          name={NavigationRoute.ForgetPassword}
-          component={ForgetPassword}
-        />
-        <Stack.Screen name={NavigationRoute.Otp} component={Otp} />
-        <Stack.Screen
-          name={NavigationRoute.NewPassword}
-          component={NewPassword}
-        />
-        <Stack.Screen name={NavigationRoute.Gender} component={Gender} />
-        <Stack.Screen name={NavigationRoute.Age} component={Age} />
-        <Stack.Screen name={NavigationRoute.Goals} component={Goals} />
-        <Stack.Screen name={NavigationRoute.Prefer1} component={Prefer1} />
-        <Stack.Screen name={NavigationRoute.Prefer2} component={Prefer2} />
-        <Stack.Screen name={NavigationRoute.ForYou} component={ForYou} />
-        <Stack.Screen name={NavigationRoute.Explore} component={Explore} />
-        <Stack.Screen name={NavigationRoute.Create} component={Create} />
-        <Stack.Screen name={NavigationRoute.Library} component={Library} />
-        <Stack.Screen name={NavigationRoute.Profile} component={Profile} />
-        <Stack.Screen
-          name={NavigationRoute.Subscription}
-          component={Subscription}
-        />
+    <ThemeProvider>
+      <NavigationContainer>
+        {/* <BottomSheetModalProvider> */}
+        <Stack.Navigator
+          initialRouteName={'SplashScreen'}
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen
+            name={NavigationRoute.SplashScreen}
+            component={SplashScreen}
+          />
+          <Stack.Screen
+            name={NavigationRoute.OnBoarding1}
+            component={OnBoarding1}
+          />
+          <Stack.Screen
+            name={NavigationRoute.OnBoarding2}
+            component={OnBoarding2}
+          />
+          <Stack.Screen
+            name={NavigationRoute.OnBoarding3}
+            component={OnBoarding3}
+          />
+          <Stack.Screen
+            name={NavigationRoute.OnBoarding4}
+            component={OnBoarding4}
+          />
+          <Stack.Screen
+            name={NavigationRoute.GetStarted}
+            component={GetStarted}
+          />
+          <Stack.Screen name={NavigationRoute.SignUp} component={SignUp} />
+          <Stack.Screen name={NavigationRoute.LogIn} component={LogIn} />
+          <Stack.Screen
+            name={NavigationRoute.ForgetPassword}
+            component={ForgetPassword}
+          />
+          <Stack.Screen name={NavigationRoute.Otp} component={Otp} />
+          <Stack.Screen
+            name={NavigationRoute.NewPassword}
+            component={NewPassword}
+          />
+          <Stack.Screen name={NavigationRoute.Gender} component={Gender} />
+          <Stack.Screen name={NavigationRoute.Age} component={Age} />
+          <Stack.Screen name={NavigationRoute.Goals} component={Goals} />
+          <Stack.Screen name={NavigationRoute.Prefer1} component={Prefer1} />
+          <Stack.Screen name={NavigationRoute.Prefer2} component={Prefer2} />
+          <Stack.Screen name={NavigationRoute.ForYou} component={ForYou} />
+          <Stack.Screen name={NavigationRoute.Explore} component={Explore} />
+          <Stack.Screen name={NavigationRoute.Create} component={Create} />
+          <Stack.Screen name={NavigationRoute.Library} component={Library} />
+          <Stack.Screen name={NavigationRoute.Profile} component={Profile} />
+          <Stack.Screen name={NavigationRoute.DarkMode} component={DarkMode} />
 
-        <Stack.Screen
-          name={NavigationRoute.bottomNavigation}
-          component={bottomNavigation}
-        />
-      </Stack.Navigator>
-      {/* </BottomSheetModalProvider> */}
-    </NavigationContainer>
+          <Stack.Screen
+            name={NavigationRoute.Subscription}
+            component={Subscription}
+          />
+
+          <Stack.Screen
+            name={NavigationRoute.bottomNavigation}
+            component={bottomNavigation}
+          />
+        </Stack.Navigator>
+        {/* </BottomSheetModalProvider> */}
+      </NavigationContainer>
+    </ThemeProvider>
   );
 };
 

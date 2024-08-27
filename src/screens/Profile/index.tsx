@@ -21,7 +21,7 @@ import Btn from '../../components/btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
-const Proflie = (onPress: any) => {
+const Proflie = (props: any) => {
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false); // Add loading state
   const navigation: any = useNavigation();
@@ -353,6 +353,11 @@ const Proflie = (onPress: any) => {
           <BottomsheetComp Title={'Manage Subscription'} />
           <BottomsheetComp Title={'Playback settings'} />
           <BottomsheetComp Title={'Delete account'} />
+          <BottomsheetComp
+            Title={'Dark mode'}
+            handleOnPress={() => props.navigation.navigate('DarkMode')}
+          />
+
           <BottomsheetComp Title={'Logout'} OnPress={() => handleLogout()} />
           <Btn
             title="Contact Support"

@@ -6,7 +6,7 @@ const BottomsheetComp = (props: any) => {
   return (
     <View>
       <TouchableOpacity
-        onPress={props.OnPress}
+        onPress={props.handleOnPress}
         style={{
           marginVertical: 10,
           padding: 8,
