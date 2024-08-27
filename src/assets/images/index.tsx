@@ -63,4 +63,10 @@ export const Images = {
   steaksP: require('../../assets/images/steaksP.png'),
   AchievementsP: require('../../assets/images/AchievementsP.png'),
   SettingArrow: require('../../assets/images/settingArrow.png'),
+  Subscription: require('../../assets/images/Subscription.png'),
+  LeftArrow: require('../../assets/images/LeftArrow.png'),
+  subs1: require('../../assets/images/subs1.png'),
+  subs2: require('../../assets/images/subs2.png'),
+  subs3: require('../../assets/images/subs3.png'),
+  subs4: require('../../assets/images/subs4.png'),
 };

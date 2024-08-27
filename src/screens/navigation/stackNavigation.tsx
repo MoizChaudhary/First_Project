@@ -25,6 +25,7 @@ import Library from '../Library';
 import Profile from '../Profile';
 import bottomNavigation from '../../bottomNavigation/bottomNavigation';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import Subscription from '../Subscription';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
@@ -81,6 +82,11 @@ const Navigator = () => {
         <Stack.Screen name={NavigationRoute.Create} component={Create} />
         <Stack.Screen name={NavigationRoute.Library} component={Library} />
         <Stack.Screen name={NavigationRoute.Profile} component={Profile} />
+        <Stack.Screen
+          name={NavigationRoute.Subscription}
+          component={Subscription}
+        />
+
         <Stack.Screen
           name={NavigationRoute.bottomNavigation}
           component={bottomNavigation}
