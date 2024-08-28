@@ -24,17 +24,16 @@ import Create from '../Create';
 import Library from '../Library';
 import Profile from '../Profile';
 import bottomNavigation from '../../bottomNavigation/bottomNavigation';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import Subscription from '../Subscription';
 import DarkMode from '../DarkMode';
 import {ThemeProvider} from '../../ContextAPI/ThemeContext';
+import SubscriptionForm from '../SubscriptionForm';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
   return (
     <ThemeProvider>
       <NavigationContainer>
-        {/* <BottomSheetModalProvider> */}
         <Stack.Navigator
           initialRouteName={'SplashScreen'}
           screenOptions={{
@@ -91,13 +90,15 @@ const Navigator = () => {
             name={NavigationRoute.Subscription}
             component={Subscription}
           />
-
+          <Stack.Screen
+            name={NavigationRoute.SubscriptionForm}
+            component={SubscriptionForm}
+          />
           <Stack.Screen
             name={NavigationRoute.bottomNavigation}
             component={bottomNavigation}
           />
         </Stack.Navigator>
-        {/* </BottomSheetModalProvider> */}
       </NavigationContainer>
     </ThemeProvider>
   );

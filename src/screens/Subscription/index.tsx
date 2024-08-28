@@ -3,210 +3,87 @@ import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Images} from '../../assets/images';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Btn from '../../components/btn';
+import {useNavigation} from '@react-navigation/native';
+import styles from './styles';
 
 const Subscription = (onPress: any) => {
+  const navigation = useNavigation();
+
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#FFF8F5'}}>
+    <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        <View
-          style={{flexDirection: 'row', marginHorizontal: 15, marginTop: 15}}>
-          <TouchableOpacity style={{alignSelf: 'center', marginTop: 4}}>
-            <Image
-              source={Images.LeftArrow}
-              style={{
-                width: 16,
-                height: 16,
-                resizeMode: 'contain',
-                alignSelf: 'center',
-              }}
-            />
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+            <Image source={Images.LeftArrow} style={styles.backButtonImage} />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 18,
-              color: '#191C20',
-              fontWeight: '700',
-              marginHorizontal: 10,
-            }}>
-            Subscription
-          </Text>
+          <Text style={styles.headerTitle}>Subscription</Text>
         </View>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: '#EFEFEF',
-            marginVertical: 10,
-          }}></View>
-        <View style={{marginHorizontal: 20}}>
-          <Text
-            style={{
-              fontSize: 28,
-              fontWeight: '700',
-              color: '#191C20',
-              marginTop: 20,
-            }}>
-            Widen your world in minutes a day
-          </Text>
+        <View style={styles.divider}></View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Widen your world in minutes a day</Text>
         </View>
-        <View style={{marginHorizontal: 20, marginVertical: 20}}>
-          <View style={{flexDirection: 'row', marginVertical: 8}}>
-            <Image
-              source={Images.subs1}
-              style={{
-                width: 15,
-                height: 15,
-                resizeMode: 'contain',
-                alignSelf: 'center',
-              }}
-            />
-            <Text
-              style={{color: '#191C20', fontSize: 14, marginHorizontal: 10}}>
-              Read Unlimited
-            </Text>
+        <View style={styles.featuresContainer}>
+          <View style={styles.featureItem}>
+            <Image source={Images.subs1} style={styles.featureImage} />
+            <Text style={styles.featureText}>Read Unlimited</Text>
           </View>
-          <View style={{flexDirection: 'row', marginVertical: 8}}>
-            <Image
-              source={Images.subs2}
-              style={{
-                width: 15,
-                height: 15,
-                resizeMode: 'contain',
-                alignSelf: 'center',
-              }}
-            />
-            <Text
-              style={{color: '#191C20', fontSize: 14, marginHorizontal: 10}}>
+          <View style={styles.featureItem}>
+            <Image source={Images.subs2} style={styles.featureImage} />
+            <Text style={styles.featureText}>
               5,000+ Books & New each month
             </Text>
           </View>
-          <View style={{flexDirection: 'row', marginVertical: 8}}>
-            <Image
-              source={Images.subs3}
-              style={{
-                width: 15,
-                height: 15,
-                resizeMode: 'contain',
-                alignSelf: 'center',
-              }}
-            />
-            <Text
-              style={{color: '#191C20', fontSize: 14, marginHorizontal: 10}}>
-              Listen Unlimited
-            </Text>
+          <View style={styles.featureItem}>
+            <Image source={Images.subs3} style={styles.featureImage} />
+            <Text style={styles.featureText}>Listen Unlimited</Text>
           </View>
-          <View style={{flexDirection: 'row', marginVertical: 8}}>
-            <Image
-              source={Images.subs4}
-              style={{
-                width: 15,
-                height: 15,
-                resizeMode: 'contain',
-                alignSelf: 'center',
-              }}
-            />
-            <Text
-              style={{color: '#191C20', fontSize: 14, marginHorizontal: 10}}>
-              Highlight favorites
-            </Text>
+          <View style={styles.featureItem}>
+            <Image source={Images.subs4} style={styles.featureImage} />
+            <Text style={styles.featureText}>Highlight favorites</Text>
           </View>
         </View>
-        <View
-          style={{
-            backgroundColor: '#ffffff',
-            justifyContent: 'space-between',
-            marginHorizontal: 20,
-            padding: 10,
-          }}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text
-              style={{
-                color: '#191C20',
-                fontSize: 18,
-                fontWeight: '700',
-                marginHorizontal: 10,
-                alignSelf: 'center',
-              }}>
-              Yearly
-            </Text>
-            <Text
-              style={{
-                color: '#0166FF',
-                fontSize: 16,
-                backgroundColor: '#E8F1FF',
-                marginHorizontal: 20,
-                borderRadius: 4,
-                padding: 5,
-                alignSelf: 'center',
-              }}>
-              Save 50%
-            </Text>
+        <View style={styles.planContainer}>
+          <View style={styles.planHeader}>
+            <Text style={styles.planTitle}>Yearly</Text>
+            <Text style={styles.planDiscount}>Save 50%</Text>
             <TouchableOpacity
-              style={{
-                backgroundColor: '#0166FF',
-                padding: 12,
-                borderRadius: 5,
-              }}>
-              <Text style={{color: '#ffffff'}}>Subscribe</Text>
+              onPress={() => {
+                //@ts-ignore
+                navigation.navigate('SubscriptionForm');
+              }}
+              style={styles.subscribeButton}>
+              <Text style={styles.subscribeButtonText}>Subscribe</Text>
             </TouchableOpacity>
           </View>
 
           <View>
-            <Text
-              style={{
-                color: '#0166FF',
-                fontSize: 24,
-                fontWeight: '800',
-                marginVertical: 10,
-              }}>
-              $89.99/ month
-            </Text>
+            <Text style={styles.planPrice}>$89.99/ month</Text>
             <Text>
               You will be charged a yearly subscription fee of $89.99
               immediately, without a trial period
             </Text>
           </View>
         </View>
-        <View
-          style={{
-            backgroundColor: '#ffffff',
-            justifyContent: 'space-between',
-            marginHorizontal: 20,
-            padding: 10,
-            marginVertical: 20,
-          }}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text
-              style={{
-                color: '#191C20',
-                fontSize: 18,
-                fontWeight: '700',
-                marginHorizontal: 10,
-                alignSelf: 'center',
-              }}>
-              Monthly
-            </Text>
+        <View style={[styles.planContainer, styles.monthlyPlan]}>
+          <View style={styles.planHeader}>
+            <Text style={styles.planTitle}>Monthly</Text>
 
             <TouchableOpacity
-              style={{
-                backgroundColor: '#0166FF',
-                padding: 12,
-                borderRadius: 5,
-              }}>
-              <Text style={{color: '#ffffff'}}>Subscribe</Text>
+              onPress={() => {
+                //@ts-ignore
+                navigation.navigate('SubscriptionForm');
+              }}
+              style={styles.subscribeButton}>
+              <Text style={styles.subscribeButtonText}>Subscribe</Text>
             </TouchableOpacity>
           </View>
 
           <View>
-            <Text
-              style={{
-                color: '#0166FF',
-                fontSize: 24,
-                fontWeight: '800',
-                marginVertical: 10,
-              }}>
-              $7.50/ month
-            </Text>
+            <Text style={styles.planPrice}>$7.50/ month</Text>
             <Text>
               You will be charged a yearly subscription fee of $89.99
               immediately, without a trial period
@@ -219,5 +96,3 @@ const Subscription = (onPress: any) => {
 };
 
 export default Subscription;
-
-const styles = StyleSheet.create({});

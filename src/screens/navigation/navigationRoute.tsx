@@ -23,4 +23,5 @@ export const NavigationRoute = {
   bottomNavigation: 'bottomNavigation',
   Subscription: 'Subscription',
   DarkMode: 'DarkMode',
+  SubscriptionForm: 'SubscriptionForm',
 };

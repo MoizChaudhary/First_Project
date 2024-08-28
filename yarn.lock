@@ -3049,6 +3049,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/slider@npm:^4.5.2":
+  version: 4.5.2
+  resolution: "@react-native-community/slider@npm:4.5.2"
+  checksum: 99023660756a1a876fc3d9c1a7cec13f7e414abee3452e1e03d2794bc7f46a9d689740bed5c3889914adf6ed85a55c6017e2f0d73b5de353025ba52bba6e79e1
+  languageName: node
+  linkType: hard
+
 "@react-native-firebase/app@npm:^20.4.0":
   version: 20.4.0
   resolution: "@react-native-firebase/app@npm:20.4.0"
@@ -3911,6 +3918,7 @@ __metadata:
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-community/checkbox": ^0.5.17
     "@react-native-community/geolocation": ^3.3.0
+    "@react-native-community/slider": ^4.5.2
     "@react-native-firebase/app": ^20.4.0
     "@react-native-firebase/auth": 20.4.0
     "@react-native-firebase/database": 20.4.0
@@ -3947,6 +3955,7 @@ __metadata:
     react-native-reanimated: ^3.15.0
     react-native-safe-area-context: ^4.10.8
     react-native-screens: ^3.33.0
+    react-native-sound: ^0.11.2
     react-native-svg: ^15.5.0
     react-native-vector-icons: ^10.1.0
     react-test-renderer: 18.2.0
@@ -9498,6 +9507,15 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 01b8ee9246a54b10298ecb4c269958d9b2b90c52f1e5151e310dbfe80017990c45ab1d18abcf3dacbc6d0458d1afa82bb52f2e645423ac0e42857460b15d32eb
+  languageName: node
+  linkType: hard
+
+"react-native-sound@npm:^0.11.2":
+  version: 0.11.2
+  resolution: "react-native-sound@npm:0.11.2"
+  peerDependencies:
+    react-native: ">=0.8.0"
+  checksum: d019de415c5f7bc8af51bc50adff7b9c307cb990aad3ea193933f89df743bbcdbfaa33c4a12bb1143a223137cea39f8b69baf5e1c29f77cf80476616bccc6f91
   languageName: node
   linkType: hard
 

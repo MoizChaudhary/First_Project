@@ -1,3 +1,4 @@
+import React, {useState, useEffect, useMemo, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -5,14 +6,10 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
-  ActivityIndicator, // Import ActivityIndicator
+  ActivityIndicator,
+  ScrollView,
 } from 'react-native';
-import React, {useState, useEffect, useCallback, useMemo, useRef} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
-import {Images} from '../../assets/images';
-import {fonts} from '../../assets/fonts';
-import {ScrollView} from 'react-native-gesture-handler';
 import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -20,10 +17,12 @@ import BottomsheetComp from '../../components/bottomSheet_Comp';
 import Btn from '../../components/btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+import {Images} from '../../assets/images';
+import styles from './styles'; // Import the styles from the separate file
 
 const Proflie = (props: any) => {
   const [progress, setProgress] = useState(0);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
   const navigation: any = useNavigation();
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const Proflie = (props: any) => {
       setProgress(prevProgress =>
         prevProgress < 0.5 ? prevProgress + 0.1 : 0.5,
       );
-    }, 10); // 20 milliseconds interval
+    }, 10);
 
     return () => clearInterval(interval);
   }, []);
@@ -50,32 +49,26 @@ const Proflie = (props: any) => {
   const snapPoints = useMemo(() => ['3%', '50%', '60%'], []);
 
   const handleOpenPress = () => {
-    // @ts-ignore
+    //@ts-ignore
     bottomSheetRef.current?.expand();
   };
 
   const handleLogout = async () => {
     console.log('Clicked');
-    setLoading(true); // Set loading to true
+    setLoading(true);
     try {
-      // Clear the user information from AsyncStorage
       await AsyncStorage.removeItem('userInfo');
-
       console.log('User Signed Out and Info Cleared!');
 
       navigation.reset({
         index: 0,
-        routes: [{name: 'LogIn'}], // Replace 'LogIn' with the correct route name
+        routes: [{name: 'LogIn'}],
       });
     } catch (error) {
       console.error('Error signing out:', error);
-      // Optionally, display a user-friendly error message
       setErrorMessage('Logout failed. Please try again.');
     } finally {
-      setLoading(false); // Set loading to false
-    }
-    function auth() {
-      throw new Error('Function not implemented.');
+      setLoading(false);
     }
 
     function setErrorMessage(arg0: string) {
@@ -84,122 +77,40 @@ const Proflie = (props: any) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#FFF8F5'}}>
+    <SafeAreaView style={styles.safeAreaView}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <TouchableOpacity
-        style={{
-          justifyContent: 'flex-end',
-          position: 'static',
-          alignSelf: 'flex-end',
-          marginHorizontal: 20,
-          marginTop: 20,
-        }}
-        onPress={handleOpenPress}>
-        <Image
-          source={Images.setting}
-          style={{width: 24, height: 24, resizeMode: 'contain'}}
-        />
+      <TouchableOpacity style={styles.settingButton} onPress={handleOpenPress}>
+        <Image source={Images.setting} style={styles.settingIcon} />
       </TouchableOpacity>
-      <View style={{marginHorizontal: 20}}>
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: '700',
-            fontFamily: 'RobotoBold',
-            color: '#000000',
-          }}>
-          Proflie
-        </Text>
+      <View style={styles.profileTitleContainer}>
+        <Text style={styles.profileTitle}>Proflie</Text>
       </View>
       <ScrollView>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: '#EFEFEF',
-            marginVertical: 10,
-          }}></View>
-        <View style={{marginHorizontal: 20, marginVertical: 10}}>
-          <Text
-            style={{
-              color: '#191C20',
-              margin: 5,
-              fontSize: 18,
-              fontWeight: '700',
-            }}>
-            Achivemnets
-          </Text>
+        <View style={styles.divider}></View>
+        <View style={styles.achievementsContainer}>
+          <Text style={styles.achievementsText}>Achivemnets</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: 20,
-            alignSelf: 'center',
-          }}>
+        <View style={styles.achievementsRow}>
           <TouchableOpacity
-            style={{marginHorizontal: 20}}
+            style={styles.achievementButton}
             onPress={toggleModal}>
             <Image
               source={Images.AchievementsP}
-              style={{width: 150, height: 150, resizeMode: 'contain'}}
+              style={styles.achievementImage}
             />
-            <Text
-              style={{
-                alignSelf: 'center',
-                color: '#191C20',
-                margin: 5,
-                fontSize: 16,
-                fontWeight: '700',
-              }}>
-              Achivement
-            </Text>
+            <Text style={styles.achievementText}>Achivement</Text>
           </TouchableOpacity>
           <View>
-            <Image
-              source={Images.steaksP}
-              style={{width: 150, height: 150, resizeMode: 'contain'}}
-            />
-            <Text
-              style={{
-                alignSelf: 'center',
-                color: '#191C20',
-                margin: 5,
-                fontSize: 16,
-                fontWeight: '700',
-              }}>
-              3 Day Steaks
-            </Text>
+            <Image source={Images.steaksP} style={styles.achievementImage} />
+            <Text style={styles.achievementText}>3 Day Steaks</Text>
           </View>
         </View>
-        <View
-          style={{
-            marginHorizontal: 20,
-            backgroundColor: 'white',
-            borderWidth: 1,
-            borderColor: '#EFEFEF',
-            alignSelf: 'center',
-            alignItems: 'center',
-            marginVertical: 20,
-            borderRadius: 10,
-          }}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: '700',
-              color: '#191C20',
-              marginTop: 10,
-            }}>
-            Summary
-          </Text>
-          <Text
-            style={{
-              color: '#8C8C8C',
-              marginHorizontal: 30,
-              textAlign: 'center',
-              marginVertical: 10,
-            }}>
+        <View style={styles.summaryContainer}>
+          <Text style={styles.summaryTitle}>Summary</Text>
+          <Text style={styles.summaryDescription}>
             I read and listen more then 32% of headway readers
           </Text>
-          <View style={{margin: 20}}>
+          <View style={styles.progressContainer}>
             <Progress.Circle
               progress={progress}
               size={112}
@@ -212,99 +123,30 @@ const Proflie = (props: any) => {
               textStyle={styles.progressText}
             />
           </View>
-          <View style={{flexDirection: 'row', margin: 20}}>
-            <View style={{marginHorizontal: 20}}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: '900',
-                  textAlign: 'center',
-                  color: '#0166FF',
-                }}>
-                11
-              </Text>
-              <Text
-                style={{
-                  marginVertical: 5,
-                  fontSize: 16,
-                  fontWeight: '400',
-                  color: '#191C20',
-                }}>
-                Book Finished
-              </Text>
+          <View style={styles.booksStats}>
+            <View style={styles.bookStat}>
+              <Text style={styles.bookStatCount}>11</Text>
+              <Text style={styles.bookStatLabel}>Book Finished</Text>
             </View>
-            <View style={{marginHorizontal: 20}}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: '900',
-                  textAlign: 'center',
-                  color: '#0166FF',
-                }}>
-                200
-              </Text>
-              <Text
-                style={{
-                  marginVertical: 5,
-                  fontSize: 16,
-                  fontWeight: '400',
-                  color: '#191C20',
-                }}>
-                Pages Reads
-              </Text>
+            <View style={styles.bookStat}>
+              <Text style={styles.bookStatCount}>200</Text>
+              <Text style={styles.bookStatLabel}>Pages Reads</Text>
             </View>
           </View>
         </View>
-
         <View>
           <Modal isVisible={isModalVisible}>
-            <View
-              style={{
-                marginHorizontal: 20,
-                backgroundColor: 'white',
-                borderWidth: 1,
-                borderColor: '#EFEFEF',
-                alignSelf: 'center',
-                alignItems: 'center',
-                marginVertical: 20,
-                borderRadius: 10,
-                justifyContent: 'center',
-                height: '40%',
-              }}>
+            <View style={styles.modalContainer}>
               <TouchableOpacity
                 onPress={toggleModal}
-                style={{
-                  justifyContent: 'flex-start',
-                  alignSelf: 'flex-start',
-                  marginHorizontal: 10,
-                  marginTop: 10,
-                }}>
-                <Image
-                  source={Images.Cross}
-                  style={{width: 18, height: 18, resizeMode: 'contain'}}
-                />
+                style={styles.closeButton}>
+                <Image source={Images.Cross} style={styles.closeIcon} />
               </TouchableOpacity>
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: '700',
-                  color: '#191C20',
-                  marginTop: 10,
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                }}>
-                Daily Goal
-              </Text>
-              <Text
-                style={{
-                  color: '#8C8C8C',
-                  marginHorizontal: 30,
-                  textAlign: 'center',
-                  marginVertical: 10,
-                }}>
+              <Text style={styles.modalTitle}>Daily Goal</Text>
+              <Text style={styles.modalDescription}>
                 To get new recommendations, you need to adjust your goals
               </Text>
-              <View style={{margin: 20}}>
+              <View style={styles.modalProgressContainer}>
                 <Progress.Circle
                   progress={progress}
                   size={112}
@@ -317,39 +159,27 @@ const Proflie = (props: any) => {
                   textStyle={styles.modalText}
                 />
               </View>
-
-              <TouchableOpacity
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  padding: 5,
-                  marginBottom: 15,
-                  backgroundColor: '#EFEFEF',
-                  borderColor: '#D1D1D1',
-                }}>
-                <Text style={{color: '#191C20'}}>Adjust daily Goal</Text>
+              <TouchableOpacity style={styles.adjustGoalButton}>
+                <Text style={styles.adjustGoalText}>Adjust daily Goal</Text>
               </TouchableOpacity>
             </View>
           </Modal>
         </View>
       </ScrollView>
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={-1} // Initially hidden
-        snapPoints={snapPoints}>
+      <BottomSheet ref={bottomSheetRef} index={-1} snapPoints={snapPoints}>
         <ScrollView style={styles.contentContainer}>
           <View>
-            <Text style={{fontSize: 18, color: '#191C20', fontWeight: '600'}}>
-              Settings
-            </Text>
+            <Text style={styles.bottomSheetTitle}>Settings</Text>
           </View>
-
           <BottomsheetComp Title={'Notifications'} />
           <BottomsheetComp Title={'Gift Headway'} />
           <BottomsheetComp Title={'Language Selection'} />
           <BottomsheetComp Title={'Privacy Policy'} />
           <BottomsheetComp Title={'Terms & Conditions'} />
-          <BottomsheetComp Title={'Subscription Terms'} />
+          <BottomsheetComp
+            Title={'Subscription Terms'}
+            handleOnPress={() => props.navigation.navigate('Subscription')}
+          />
           <BottomsheetComp Title={'Manage Subscription'} />
           <BottomsheetComp Title={'Playback settings'} />
           <BottomsheetComp Title={'Delete account'} />
@@ -357,29 +187,17 @@ const Proflie = (props: any) => {
             Title={'Dark mode'}
             handleOnPress={() => props.navigation.navigate('DarkMode')}
           />
-
           <BottomsheetComp Title={'Logout'} OnPress={() => handleLogout()} />
           <Btn
             title="Contact Support"
-            customTextStyle={{
-              color: '#191C20',
-              alignSelf: 'center',
-              fontSize: 16,
-            }}
-            customViewStyle={{
-              backgroundColor: '#F6F6F6',
-              borderWidth: 1,
-              borderColor: '#D1D1D1',
-              marginTop: 15,
-            }}
+            customTextStyle={styles.contactSupportText}
+            customViewStyle={styles.contactSupportButton}
             onPress={() => {
               navigation.navigate('');
             }}
           />
         </ScrollView>
       </BottomSheet>
-
-      {/* Show ActivityIndicator when loading */}
       {loading && (
         <View style={styles.overlay}>
           <ActivityIndicator size="large" color="#0066ff" />
@@ -390,32 +208,3 @@ const Proflie = (props: any) => {
 };
 
 export default Proflie;
-
-const styles = StyleSheet.create({
-  progressText: {
-    color: '#333',
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
-  modalText: {
-    color: '#333',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  container: {
-    flex: 1,
-    padding: 24,
-    justifyContent: 'center',
-    backgroundColor: 'grey',
-  },
-  contentContainer: {
-    marginHorizontal: 20,
-    marginTop: 10,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

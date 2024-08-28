@@ -56,7 +56,6 @@ export const Images = {
   Lock: require('../../assets/images/lock.png'),
   Idea: require('../../assets/images/idea.png'),
   setting: require('../../assets/images/setting.png'),
-
   logout: require('../../assets/images/logout.png'),
   wallet: require('../../assets/images/wallet.png'),
   profileP: require('../../assets/images/profileP.png'),
@@ -69,4 +68,11 @@ export const Images = {
   subs2: require('../../assets/images/subs2.png'),
   subs3: require('../../assets/images/subs3.png'),
   subs4: require('../../assets/images/subs4.png'),
+  PlaySong: require('../../assets/images/PlaySong.png'),
+  StopSong: require('../../assets/images/Pause.png'),
+  NextSong: require('../../assets/images/NextSong.png'),
+  PreviousSong: require('../../assets/images/PreviousSong.png'),
+  MusicHead: require('../../assets/images/MusicHead.png'),
+  Forward5: require('../../assets/images/Forward5.png'),
+  Reverse5: require('../../assets/images/Reverse5.png'),
 };
