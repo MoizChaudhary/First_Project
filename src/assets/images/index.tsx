@@ -1,4 +1,5 @@
 export const Images = {
+  splash: require('../../assets/images/splash.jpg'),
   logo: require('../../assets/images/logo.png'),
   OnBoarding1: require('../../assets/images/OnBoarding1.png'),
   OnBoarding2: require('../../assets/images/OnBoarding2.png'),

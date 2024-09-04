@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   contentContainer: {
+    flex: 1,
     padding: 16,
   },
   bottomSheetTitle: {
@@ -173,12 +174,13 @@ const styles = StyleSheet.create({
   },
   contactSupportButton: {
     alignItems: 'center',
-    marginTop: 20,
+    marginVertical: 20,
+    backgroundColor: '#F6F6F6',
   },
   contactSupportText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#0066ff',
+    color: '#191C20',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

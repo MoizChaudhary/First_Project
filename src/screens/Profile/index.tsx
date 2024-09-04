@@ -7,12 +7,13 @@ import {
   StatusBar,
   TouchableOpacity,
   ActivityIndicator,
+  // ScrollView,
   ScrollView,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import BottomsheetComp from '../../components/bottomSheet_Comp';
 import Btn from '../../components/btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -167,7 +168,7 @@ const Proflie = (props: any) => {
         </View>
       </ScrollView>
       <BottomSheet ref={bottomSheetRef} index={-1} snapPoints={snapPoints}>
-        <ScrollView style={styles.contentContainer}>
+        <BottomSheetScrollView style={styles.contentContainer}>
           <View>
             <Text style={styles.bottomSheetTitle}>Settings</Text>
           </View>
@@ -187,7 +188,10 @@ const Proflie = (props: any) => {
             Title={'Dark mode'}
             handleOnPress={() => props.navigation.navigate('DarkMode')}
           />
-          <BottomsheetComp Title={'Logout'} OnPress={() => handleLogout()} />
+          <BottomsheetComp
+            Title={'Logout'}
+            handleOnPress={() => handleLogout()}
+          />
           <Btn
             title="Contact Support"
             customTextStyle={styles.contactSupportText}
@@ -196,7 +200,7 @@ const Proflie = (props: any) => {
               navigation.navigate('');
             }}
           />
-        </ScrollView>
+        </BottomSheetScrollView>
       </BottomSheet>
       {loading && (
         <View style={styles.overlay}>
