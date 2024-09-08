@@ -1,3 +1,5 @@
+import {Avatar} from 'react-native-paper';
+
 export const Images = {
   splash: require('../../assets/images/splash.jpg'),
   logo: require('../../assets/images/logo.png'),
@@ -76,4 +78,7 @@ export const Images = {
   MusicHead: require('../../assets/images/MusicHead.png'),
   Forward5: require('../../assets/images/Forward5.png'),
   Reverse5: require('../../assets/images/Reverse5.png'),
+  Avatar1: require('../images/Avatar1.jpg'),
+  Avatar2: require('../images/Avatar2.jpg'),
+  Avatar3: require('../images/Avatar3.jpg'),
 };
