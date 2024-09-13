@@ -81,4 +81,8 @@ export const Images = {
   Avatar1: require('../images/Avatar1.jpg'),
   Avatar2: require('../images/Avatar2.jpg'),
   Avatar3: require('../images/Avatar3.jpg'),
+  chats: require('../images/chat.png'),
+  plus: require('../images/plus.png'),
+  // wave: require('../images/wave.png'),
+  wave: require('../images/wave.jpg'),
 };

@@ -28,6 +28,8 @@ import Subscription from '../Subscription';
 import DarkMode from '../DarkMode';
 import {ThemeProvider} from '../../ContextAPI/ThemeContext';
 import SubscriptionForm from '../SubscriptionForm';
+import ChatScreen from '../Chats';
+import UserList from '../UserList';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
@@ -85,6 +87,12 @@ const Navigator = () => {
           <Stack.Screen name={NavigationRoute.Library} component={Library} />
           <Stack.Screen name={NavigationRoute.Profile} component={Profile} />
           <Stack.Screen name={NavigationRoute.DarkMode} component={DarkMode} />
+          <Stack.Screen name={NavigationRoute.UserList} component={UserList} />
+
+          <Stack.Screen
+            name={NavigationRoute.ChatScreen}
+            component={ChatScreen}
+          />
 
           <Stack.Screen
             name={NavigationRoute.Subscription}

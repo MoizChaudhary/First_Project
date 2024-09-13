@@ -9,34 +9,49 @@ import PasswordField from '../../components/PasswordField';
 import Btn from '../../components/btn';
 import SocialIcons from '../../components/GFBA';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import firestore from '@react-native-firebase/firestore';
 
 const SignUp = ({onPress}: any) => {
   const navigation: any = useNavigation();
-  const [email, setEmail] = useState('');
+  const [emails, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfrimPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleLogin = async () => {
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created');
-        navigation.navigate('Gender');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-          setErrorMessage('That email address is already in use!');
-        } else if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-          setErrorMessage('That email address is invalid!');
-        } else {
-          console.error(error);
-          setErrorMessage('Something went wrong, please try again.');
-        }
+    try {
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        emails,
+        password,
+      );
+
+      // Get the user object from the response
+      const user = userCredential.user;
+      const uid = user.uid;
+      const email = user.email;
+      const isEmailVerified = user.emailVerified;
+      const userName = fullName;
+      await firestore().collection('Users').doc(uid).set({
+        email,
+        uid,
+        isEmailVerified,
+        userName,
       });
+      // Navigate to the next screen
+      navigation.navigate('Gender');
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('That email address is already in use!');
+        setErrorMessage('That email address is already in use!');
+      } else if (error.code === 'auth/invalid-email') {
+        console.log('That email address is invalid!');
+        setErrorMessage('That email address is invalid!');
+      } else {
+        console.error(error);
+        setErrorMessage('Something went wrong, please try again.');
+      }
+    }
   };
 
   useEffect(() => {
@@ -105,7 +120,7 @@ const SignUp = ({onPress}: any) => {
             setEmail(text);
           }}
           label={'Email address'}
-          value={email}
+          value={emails}
         />
         <PasswordField
           value={password}

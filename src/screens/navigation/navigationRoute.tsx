@@ -24,4 +24,6 @@ export const NavigationRoute = {
   Subscription: 'Subscription',
   DarkMode: 'DarkMode',
   SubscriptionForm: 'SubscriptionForm',
+  ChatScreen: 'ChatScreen',
+  UserList: 'UserList',
 };

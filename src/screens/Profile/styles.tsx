@@ -188,6 +188,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  profileSection: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  profileImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 15,
+  },
+  userName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+  infoSection: {
+    marginHorizontal: 25,
+  },
+  label: {
+    fontSize: 16,
+    color: '#555',
+    fontWeight: '600',
+    marginTop: 10,
+  },
+  infoText: {
+    fontSize: 18,
+    color: '#333',
+    textAlign: 'center',
+  },
 });
 
 export default styles;
