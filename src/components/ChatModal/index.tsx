@@ -23,7 +23,40 @@ const ChatModal = ({isModalVisible, toggleModal}: any) => {
   const [searchQuery, setSearchQuery] = useState(''); // Search query state
   const currentUser = auth().currentUser;
   const [currentUserData, setCurrentUserData] = useState(null);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // Fetch the current user ID
+        const userId = auth().currentUser?.uid;
+        console.log('Current User ID:', userId); // Debugging statement
 
+        if (!userId) {
+          console.error('User is not authenticated');
+          return;
+        }
+        setLoader(true);
+        console.log('setLoader: ', setLoader);
+        // Fetch the user document from Firestore
+        const userDoc = await firestore().collection('Users').doc(userId).get();
+        setLoader(false);
+        console.log('Document Data:', userDoc.data()); // Debugging statement
+
+        if (userDoc.exists) {
+          setCurrentUserData(
+            //@ts-ignore
+            userDoc.data(),
+          );
+        } else {
+          console.error('User document does not exist');
+        }
+      } catch (error) {
+        setLoader(false);
+        console.error('Error fetching user data: ', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   useEffect(() => {
     const fetchUsers = async () => {
       try {

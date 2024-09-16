@@ -3989,6 +3989,7 @@ __metadata:
     react-native-maps: ^1.18.0
     react-native-maps-directions: ^1.9.0
     react-native-modal: ^13.0.1
+    react-native-onesignal: ^5.2.4
     react-native-otp-entry: ^1.7.1
     react-native-otp-textinput: ^1.1.6
     react-native-paper: ^5.12.5
@@ -3999,6 +4000,7 @@ __metadata:
     react-native-screens: ^3.33.0
     react-native-sound: ^0.11.2
     react-native-svg: ^15.5.0
+    react-native-swipe-list-view: ^3.2.9
     react-native-uuid: ^2.0.2
     react-native-vector-icons: ^10.1.0
     react-test-renderer: 18.2.0
@@ -6780,7 +6782,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:^2.2.4":
+"invariant@npm:^2.2.2, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -9549,6 +9551,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-onesignal@npm:^5.2.4":
+  version: 5.2.4
+  resolution: "react-native-onesignal@npm:5.2.4"
+  dependencies:
+    invariant: ^2.2.2
+  checksum: ccc8c07e5a550124d8da7bae24a553a0b1beb68431eeb555ef7a3abc362462f6ed557606f0ff64af9a5a2fd6f35e7ce4f8cf7160e947ddd2d2a82b0e3dc09142
+  languageName: node
+  linkType: hard
+
 "react-native-otp-entry@npm:^1.7.1":
   version: 1.7.1
   resolution: "react-native-otp-entry@npm:1.7.1"
@@ -9685,6 +9696,17 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 31c70317b7ca4c74d2b1db28af7ae127920c004c606ed4bd37f1e191a9433f6ce9929eabd105ed8768a1327ad26675ef0eaa06a97ca736ced8bfc6410b0d7480
+  languageName: node
+  linkType: hard
+
+"react-native-swipe-list-view@npm:^3.2.9":
+  version: 3.2.9
+  resolution: "react-native-swipe-list-view@npm:3.2.9"
+  peerDependencies:
+    prop-types: ">=15.5.0"
+    react: ">=0.14.8"
+    react-native: ">=0.23.1"
+  checksum: e6fa7f60bcdffdffe0567144e01f4e53b78eff2dfb7f5bad0f560336d039afc5b02603281b5ef0c8b0de86f1cd94c50f943676f25c3f42cc390bedb02df9536d
   languageName: node
   linkType: hard
 

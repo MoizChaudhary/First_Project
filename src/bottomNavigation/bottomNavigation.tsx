@@ -66,7 +66,7 @@ const App = () => {
         }}
       />
 
-<Bottom.Screen
+      <Bottom.Screen
         name="Library"
         component={Library}
         options={{

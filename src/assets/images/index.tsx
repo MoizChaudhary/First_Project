@@ -85,4 +85,5 @@ export const Images = {
   plus: require('../images/plus.png'),
   // wave: require('../images/wave.png'),
   wave: require('../images/wave.jpg'),
+  delete: require('../images/delete.png'),
 };
