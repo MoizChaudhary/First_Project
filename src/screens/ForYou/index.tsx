@@ -6,13 +6,17 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Images} from '../../assets/images';
 import {useNavigation} from '@react-navigation/native';
 import BookItem from '../../components/Flatlist_component';
 import styles from './styles';
+import firestore from '@react-native-firebase/firestore';
+import {useDispatch, useSelector} from 'react-redux';
+import auth from '@react-native-firebase/auth'; // Firebase Authentication
+import {selectUser, setUser} from '../../Redux/slice/userSlice';
 const data = [
   {id: '1', image: Images.F1},
   {id: '2', image: Images.F2},
@@ -60,8 +64,40 @@ const Summaries = [
     ideas: '9 Ideas',
   },
 ];
+
 const Home = (onPress: any) => {
   const navigation: any = useNavigation();
+  const dispatch = useDispatch();
+  const userData = useSelector(selectUser);
+  console.log(' userData home: ', userData);
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  const fetchUserData = async () => {
+    try {
+      // Fetch the current user ID
+      const userId = auth().currentUser?.uid;
+
+      if (!userId) {
+        console.error('User is not authenticated');
+        return;
+      }
+
+      // Fetch the user document from Firestore
+      const userDoc = await firestore().collection('Users').doc(userId).get();
+
+      if (userDoc.exists) {
+        // console.log('userDoc: ', userDoc?.data());
+
+        dispatch(setUser(userDoc?.data()));
+      } else {
+        console.error('User document does not exist');
+      }
+    } catch (error) {
+      console.error('Error fetching user data: ', error);
+    }
+  };
   return (
     <SafeAreaView style={styles.SafeAreaView}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
@@ -225,6 +261,10 @@ const Home = (onPress: any) => {
                 style={styles.button}>
                 <Text style={styles.buttonText}>Manage</Text>
               </TouchableOpacity>
+            </View>
+            <View>
+              <Text style={{color: 'blue'}}>{userData?.email}</Text>
+              <Text style={{color: 'blue'}}>{userData?.userName}</Text>
             </View>
           </View>
         </View>

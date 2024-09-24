@@ -30,6 +30,8 @@ import {ThemeProvider} from '../../ContextAPI/ThemeContext';
 import SubscriptionForm from '../SubscriptionForm';
 import ChatScreen from '../Chats';
 import UserList from '../UserList';
+import Privacy from '../Privacy';
+import ContactUs from '../ContactUs';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
@@ -88,6 +90,11 @@ const Navigator = () => {
           <Stack.Screen name={NavigationRoute.Profile} component={Profile} />
           <Stack.Screen name={NavigationRoute.DarkMode} component={DarkMode} />
           <Stack.Screen name={NavigationRoute.UserList} component={UserList} />
+          <Stack.Screen name={NavigationRoute.Privacy} component={Privacy} />
+          <Stack.Screen
+            name={NavigationRoute.ContactUs}
+            component={ContactUs}
+          />
 
           <Stack.Screen
             name={NavigationRoute.ChatScreen}

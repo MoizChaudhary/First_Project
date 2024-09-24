@@ -26,4 +26,6 @@ export const NavigationRoute = {
   SubscriptionForm: 'SubscriptionForm',
   ChatScreen: 'ChatScreen',
   UserList: 'UserList',
+  Privacy: 'Privacy',
+  ContactUs: 'ContactUs',
 };

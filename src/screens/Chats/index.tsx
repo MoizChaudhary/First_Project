@@ -3,10 +3,13 @@ import {GiftedChat} from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth'; // Firebase Authentication
 import uuid from 'react-native-uuid';
-import {Image, StatusBar, Text, View} from 'react-native';
+import {Alert, Image, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {Images} from '../../assets/images';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import ImagePicker from 'react-native-image-crop-picker';
+import storage from '@react-native-firebase/storage';
+import Video from 'react-native-video'; // Import react-native-video
 
 type Message = {
   _id: string;
@@ -16,18 +19,17 @@ type Message = {
     _id: number;
     name: string;
   };
+  image?: string; // Optional field for image URL
+  video?: string; // Optional field for video URL
 };
 
 const ChatScreen = (props: any) => {
   const navigation = useNavigation();
   const otherUser = props?.route?.params?.otherUser;
   const currentUser = props?.route?.params?.currentUser;
-  // console.log('roomID: ', roomID);
-  // console.log('otherUser: ', otherUser);
-  // console.log('currentUser: ', currentUser);
   const otherUserId = otherUser?.uid;
   const otherUserName = otherUser?.userName;
-  const myId = currentUser.uid;
+  const myId = currentUser?.uid || '';
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [roomID, setRoomID] = useState(props?.route?.params?.roomID || '');
@@ -41,30 +43,18 @@ const ChatScreen = (props: any) => {
         .collection('messages') // Assuming messages are stored in a subcollection under the room
         .orderBy('createdAt', 'desc')
         .onSnapshot(querySnapshot => {
-          console.log('------------->>>>>>>> querySnapshot: ', querySnapshot);
           const messagesFirestore: Message[] = querySnapshot.docs
             .map(doc => {
               const firebaseData = doc.data();
 
-              if (
-                !firebaseData.text ||
-                !firebaseData.createdAt ||
-                !firebaseData.user ||
-                !firebaseData.user._id ||
-                !firebaseData.user.name
-              ) {
-                console.error(
-                  'Firestore data missing required fields:',
-                  firebaseData,
-                );
-                return null;
-              }
-
               const data: Message = {
                 _id: doc.id,
-                text: firebaseData.text,
+                text: firebaseData.text || '',
                 createdAt: firebaseData.createdAt.toDate(),
                 user: firebaseData.user,
+                image: firebaseData.image || null, // Handling image
+
+                video: firebaseData.video || null, // Handling video
               };
 
               return data;
@@ -82,7 +72,7 @@ const ChatScreen = (props: any) => {
     (newMessages: Message[] = []) => {
       const newMessage = newMessages[0];
 
-      if (!newMessage?.text || newMessage.text.trim() === '') {
+      if (!newMessage?.text && !newMessage?.image && !newMessage?.video) {
         console.error('Message is empty or undefined');
         return;
       }
@@ -90,25 +80,19 @@ const ChatScreen = (props: any) => {
       const message: Message = {
         //@ts-ignore
         _id: uuid.v4(),
-        text: newMessage.text,
+        text: newMessage.text || '',
         createdAt: new Date(),
         user: {
           _id: currentUser.uid,
-          // name: myId === 'some_fixed_id_for_you' ? 'You' : 'Support', // Adjust logic as needed
           name: currentUser?.userName,
         },
+        //@ts-ignore
+        image: newMessage.image || null, // Add image field
+        //@ts-ignore
+        video: newMessage.video || null, // Add image field
+        //@ts-ignore
+        type: newMessage?.type || 'text',
       };
-
-      if (
-        !message.text ||
-        !message.createdAt ||
-        !message.user ||
-        !message.user._id ||
-        !message.user.name
-      ) {
-        console.error('Message contains undefined fields:', message);
-        return;
-      }
 
       if (roomID !== '') {
         sendMessageFirebase(message);
@@ -123,11 +107,10 @@ const ChatScreen = (props: any) => {
     const chatRoomRef = await firestore()
       .collection('chats')
       .add({
-        lastMessage: message.text, // Store the initial message as the last message
+        lastMessage: message.text || message.image, // Store the initial message or image as the last message
         userIds: [currentUser.uid, otherUser.uid], // Store both user IDs
         users: [currentUser, otherUser], // Store both user details
       });
-    console.log('Chat room created with ID:', chatRoomRef.id);
 
     if (chatRoomRef?.id) {
       setRoomID(chatRoomRef?.id);
@@ -137,13 +120,18 @@ const ChatScreen = (props: any) => {
         .collection('messages')
         .add(message);
 
-      await firestore().collection('chats').doc(chatRoomRef.id).update({
-        lastMessage: message.text, // Update with the initial message or latest message
-      });
+      await firestore()
+        .collection('chats')
+        .doc(chatRoomRef.id)
+        .update({
+          lastMessage: message.text || message.image, // Update with the latest message or image
+          type: message.type,
+        });
     }
   };
 
   const sendMessageFirebase = async (message: any) => {
+    console.log('message: ', message);
     await firestore()
       .collection('chats')
       .doc(roomID) // Use the specific roomId to save messages
@@ -153,9 +141,161 @@ const ChatScreen = (props: any) => {
         console.error('Error sending message to Firestore:', error);
       });
 
-    await firestore().collection('chats').doc(roomID).update({
-      lastMessage: message.text, // Update with the initial message or latest message
-    });
+    await firestore()
+      .collection('chats')
+      .doc(roomID)
+      .update({
+        lastMessage: message.text || message.image || message.video, // Update with the latest message or image
+        type: message.type,
+      });
+  };
+
+  const renderSend = (props: any) => {
+    return (
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity style={styles.sendButton} onPress={openCamera}>
+          <Image
+            source={Images.camera}
+            style={{width: 30, height: 30, resizeMode: 'contain'}}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.sendButton}
+          onPress={pickImageFromGallery}>
+          <Image
+            source={Images.gallery}
+            style={{width: 30, height: 30, resizeMode: 'contain'}}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.sendButton}
+          onPress={pickVideoFromGallery}>
+          <Image
+            source={Images.video}
+            style={{width: 30, height: 30, resizeMode: 'contain'}}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.sendButton}
+          onPress={() => {
+            if (props.text && props.onSend) {
+              props.onSend({text: props.text.trim()}, true);
+            }
+          }}>
+          <Image
+            source={Images.sendMessage}
+            style={{width: 30, height: 30, resizeMode: 'contain'}}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const uploadFileToFirebase = async (file: any) => {
+    const fileName = file.filename || `file-${Date.now()}`;
+    const reference = storage().ref(fileName);
+
+    try {
+      await reference.putFile(file.path);
+      const downloadUrl = await reference.getDownloadURL();
+
+      Alert.alert('Upload Success', `File uploaded: ${downloadUrl}`);
+      return downloadUrl;
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+      Alert.alert('Upload Failed', 'Something went wrong during the upload');
+      throw error;
+    }
+  };
+
+  const pickImageFromGallery = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    })
+      .then(async image => {
+        try {
+          const imageUrl = await uploadFileToFirebase(image);
+          const message = {
+            text: '',
+            image: imageUrl,
+            createdAt: new Date(),
+            user: {_id: myId, name: currentUser.userName},
+            type: 'image',
+          };
+          //@ts-ignore
+          onSend([message]);
+        } catch (error) {
+          console.log('Error uploading image:', error);
+        }
+      })
+      .catch(error => {
+        console.log('Error picking image: ', error);
+      });
+  };
+
+  const pickVideoFromGallery = () => {
+    ImagePicker.openPicker({
+      mediaType: 'video',
+    })
+      .then(async video => {
+        console.log('Video selected:', video); // Log video details
+
+        try {
+          const videoUrl = await uploadFileToFirebase(video);
+          const message = {
+            text: '',
+            video: videoUrl,
+            createdAt: new Date(),
+            user: {_id: myId, name: currentUser.userName},
+            type: 'video',
+          };
+          //@ts-ignore
+          onSend([message]);
+        } catch (error) {
+          console.log('Error uploading video:', error);
+        }
+      })
+      .catch(error => {
+        console.log('Error picking video: ', error);
+      });
+  };
+
+  const openCamera = () => {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    })
+      .then(async image => {
+        const imageUrl = await uploadFileToFirebase(image);
+        const message = {
+          text: '',
+          image: imageUrl,
+          createdAt: new Date(),
+          user: {_id: myId, name: currentUser.userName},
+          type: 'image',
+        };
+        //@ts-ignore
+        onSend([message]);
+      })
+      .catch(error => {
+        console.log('Error opening camera: ', error);
+      });
+  };
+  const renderMessageVideo = (props: any) => {
+    const {currentMessage} = props;
+    return (
+      <View style={{width: 250, height: 180}}>
+        <Video
+          source={{uri: currentMessage.video}} // Video URL from message
+          style={styles.videoPlayer}
+          resizeMode="cover"
+          controls={true} // Enable video controls
+        />
+      </View>
+    );
   };
 
   return (
@@ -217,21 +357,41 @@ const ChatScreen = (props: any) => {
           </Text>
         </View>
       </View>
-      {/* <View
-        style={{
-          borderWidth: 1,
-          backgroundColor: 'black',
-        }}></View> */}
+
       <GiftedChat
         messages={messages}
         //@ts-ignore
-        onSend={newMessages => onSend(newMessages)}
+        onSend={newMessage => onSend(newMessage)}
         user={{
-          _id: myId || 0,
+          _id: myId,
         }}
+        renderSend={renderSend}
+        renderMessageVideo={renderMessageVideo} // Adding video renderer
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  sendButton: {
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+    marginBottom: 5,
+    paddingHorizontal: 5,
+    // backgroundColor: '#007bff',
+    borderRadius: 5,
+  },
+  sendText: {
+    color: '#000000',
+    fontSize: 16,
+  },
+  videoPlayer: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+  },
+});
 
 export default ChatScreen;

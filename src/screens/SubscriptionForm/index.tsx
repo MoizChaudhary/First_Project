@@ -29,7 +29,15 @@ const Subscription = (onPress: any) => {
           <Text style={styles.mainText}>
             Build a learning habit you’ll love to keep
           </Text>
-          <Image source={Images.Subscription} style={styles.image} />
+          <Image
+            source={require('../../assets/animation/subscription.gif')} // Path to your GIF
+            style={{
+              width: 350,
+              height: 300, // Adjust size based on the GIF dimensions
+              marginBottom: 30,
+              resizeMode: 'contain',
+            }}
+          />
           <Text style={styles.price}>$7.50/ month</Text>
           <Text style={styles.description}>
             You will be charged a yearly subscription fee of $89.99 immediately,

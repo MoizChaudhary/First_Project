@@ -22,46 +22,18 @@ import {Images} from '../../assets/images';
 import styles from './styles'; // Import the styles from the separate file
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth'; // Firebase Authentication
+import {selectUser} from '../../Redux/slice/userSlice';
+import {useDispatch, useSelector} from 'react-redux';
 const Proflie = (props: any) => {
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
   const navigation: any = useNavigation();
-  const [userData, setUserData] = useState({name: '', email: ''});
+
   const [loader, setLoader] = useState(false);
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        // Fetch the current user ID
-        const userId = auth().currentUser?.uid;
-        console.log('Current User ID:', userId); // Debugging statement
+  // const dispatch = useDispatch();
 
-        if (!userId) {
-          console.error('User is not authenticated');
-          return;
-        }
-        setLoader(true);
-        console.log('setLoader: ', setLoader);
-        // Fetch the user document from Firestore
-        const userDoc = await firestore().collection('Users').doc(userId).get();
-        setLoader(false);
-        console.log('Document Data:', userDoc.data()); // Debugging statement
-
-        if (userDoc.exists) {
-          setUserData({
-            name: userDoc.data()?.userName || 'Name not found',
-            email: userDoc.data()?.email || 'Email not found',
-          });
-        } else {
-          console.error('User document does not exist');
-        }
-      } catch (error) {
-        setLoader(false);
-        console.error('Error fetching user data: ', error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const userData = useSelector(selectUser);
+  console.log('userData profile: ', userData);
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress(prevProgress =>
@@ -130,11 +102,11 @@ const Proflie = (props: any) => {
           <>
             <View style={styles.profileSection}>
               <Image source={Images.Avatar2} style={styles.profileImage} />
-              <Text style={styles.userName}>{userData.name}</Text>
+              <Text style={styles.userName}>{userData?.userName}</Text>
             </View>
             <View style={styles.infoSection}>
               <Text style={styles.label}>Email:</Text>
-              <Text style={styles.infoText}>{userData.email}</Text>
+              <Text style={styles.infoText}>{userData?.email}</Text>
               <Text style={styles.label}>Phone:</Text>
               <Text style={styles.infoText}>{'1234574366364'}</Text>
 
@@ -234,7 +206,10 @@ const Proflie = (props: any) => {
             handleOnPress={() => props.navigation.navigate('UserList')}
           />
           <BottomsheetComp Title={'Language Selection'} />
-          <BottomsheetComp Title={'Privacy Policy'} />
+          <BottomsheetComp
+            Title={'Privacy Policy'}
+            handleOnPress={() => props.navigation.navigate('Privacy')}
+          />
           <BottomsheetComp Title={'Terms & Conditions'} />
           <BottomsheetComp
             Title={'Subscription Terms'}
@@ -246,6 +221,10 @@ const Proflie = (props: any) => {
           <BottomsheetComp
             Title={'Dark mode'}
             handleOnPress={() => props.navigation.navigate('DarkMode')}
+          />
+          <BottomsheetComp
+            Title={'Contact Us'}
+            handleOnPress={() => props.navigation.navigate('ContactUs')}
           />
           <BottomsheetComp
             Title={'Logout'}

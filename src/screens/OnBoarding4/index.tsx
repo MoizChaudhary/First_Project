@@ -13,7 +13,15 @@ const OnBoarding4 = ({onPress}: any) => {
         <StatusBar backgroundColor="white" barStyle="dark-content" />
       </View>
       <View style={{justifyContent: 'center'}}>
-        <Image source={Images.OnBoarding3} style={styles.Img_OnBoarding1} />
+        <Image
+          source={require('../../assets/animation/OnBoarding4.gif')} // Path to your GIF
+          style={{
+            width: 400,
+            height: 400, // Adjust size based on the GIF dimensions
+            marginBottom: 30,
+            resizeMode: 'contain',
+          }}
+        />
       </View>
       <View style={styles.Main_Number_View}>
         <View style={styles.Digit_style}>

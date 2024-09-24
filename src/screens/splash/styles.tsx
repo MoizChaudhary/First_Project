@@ -12,10 +12,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   background: {
-    position: 'absolute',
-    width: 70,
-    height: 70,
+    // position: 'absolute',
+    width: 35,
+    height: 35,
     resizeMode: 'contain',
+    bottom: 0,
+    alignSelf: 'center',
   },
   Img_S1: {
     position: 'absolute',

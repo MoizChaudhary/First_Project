@@ -86,4 +86,9 @@ export const Images = {
   // wave: require('../images/wave.png'),
   wave: require('../images/wave.jpg'),
   delete: require('../images/delete.png'),
+  share: require('../images/share.png'),
+  camera: require('../images/camera.png'),
+  sendMessage: require('../images/send.png'),
+  gallery: require('../images/gallery.png'),
+  video: require('../images/video.png'),
 };

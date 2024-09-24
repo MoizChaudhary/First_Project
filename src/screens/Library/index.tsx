@@ -8,6 +8,7 @@ import {
   View,
   Alert,
   TextInput,
+  Dimensions,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Images} from '../../assets/images';
@@ -20,20 +21,23 @@ import ChatList from '../../components/chatList';
 import auth from '@react-native-firebase/auth'; // Firebase Authentication
 
 const Library = (onPress: any, props: any) => {
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
   const navigation: any = useNavigation();
   const [users, setUsers] = useState([]);
 
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [data, setData] = useState<any[]>([]);
+  console.log('data: ', data);
   const currentUser = auth().currentUser;
   const [currentUserData, setCurrentUserData] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState<any[]>([]); // State for filtered chats
+  console.log('filteredData: ', filteredData);
 
   //@ts-ignore
   const cuid = currentUser.uid;
-  console.log('cuid: ', cuid);
 
   useEffect(() => {
     const chatsCollection = firestore().collection('chats');
@@ -43,7 +47,9 @@ const Library = (onPress: any, props: any) => {
       .where('userIds', 'array-contains', cuid)
       .onSnapshot(
         querySnapshot => {
-          console.log(`Found ${querySnapshot.size} documents`);
+          console.log(
+            `*****************************Found ${querySnapshot.size} documents`,
+          );
           if (querySnapshot.empty) {
             console.log('No matching chat found.');
             setData([]); // Clear the data if no matching chats
@@ -137,6 +143,10 @@ const Library = (onPress: any, props: any) => {
     if (otherUser && otherUser.length > 0) {
       title = otherUser[0].userName;
     }
+    const message = item.lastMessage || '';
+
+    const type = item.type;
+    console.log('type: ', type);
 
     return (
       <TouchableOpacity
@@ -192,7 +202,7 @@ const Library = (onPress: any, props: any) => {
                 color: '#fff',
                 marginHorizontal: 20,
               }}>
-              {item.lastMessage || ''}
+              {type === 'text' ? message : type}
             </Text>
           </View>
         </View>
@@ -215,13 +225,14 @@ const Library = (onPress: any, props: any) => {
   );
 
   return (
-    <View style={{backgroundColor: '#000000'}}>
+    <View style={{backgroundColor: '#000000', flex: 1}}>
       <ImageBackground
         source={Images.wave}
         style={{
-          width: 420,
-          height: 820,
-          flex: 1,
+          width: screenWidth,
+          height: screenHeight,
+
+          position: 'absolute',
         }}
       />
       <StatusBar backgroundColor="#222222" barStyle="light-content" />
@@ -282,7 +293,7 @@ const Library = (onPress: any, props: any) => {
         style={{
           padding: 10,
           position: 'absolute',
-          top: 700,
+          bottom: 50,
           right: 5,
         }}
         onPress={toggleModal}>
