@@ -205,19 +205,28 @@ const Proflie = (props: any) => {
             Title={'Users list'}
             handleOnPress={() => props.navigation.navigate('UserList')}
           />
-          <BottomsheetComp Title={'Language Selection'} />
+          <BottomsheetComp
+            Title={'Calendar'}
+            handleOnPress={() => props.navigation.navigate('Calendar')}
+          />
           <BottomsheetComp
             Title={'Privacy Policy'}
             handleOnPress={() => props.navigation.navigate('Privacy')}
           />
-          <BottomsheetComp Title={'Terms & Conditions'} />
+          <BottomsheetComp
+            Title={'Terms & Conditions'}
+            handleOnPress={() => props.navigation.navigate('TermsCondition')}
+          />
           <BottomsheetComp
             Title={'Subscription Terms'}
             handleOnPress={() => props.navigation.navigate('Subscription')}
           />
           <BottomsheetComp Title={'Manage Subscription'} />
           <BottomsheetComp Title={'Playback settings'} />
-          <BottomsheetComp Title={'Delete account'} />
+          <BottomsheetComp
+            Title={'Delete account'}
+            handleOnPress={() => props.navigation.navigate('DeleteAccount')}
+          />
           <BottomsheetComp
             Title={'Dark mode'}
             handleOnPress={() => props.navigation.navigate('DarkMode')}

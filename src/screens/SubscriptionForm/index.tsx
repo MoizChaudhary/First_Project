@@ -46,7 +46,13 @@ const Subscription = (onPress: any) => {
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <Btn title="Subscribe" onPress={() => {}} />
+        <Btn
+          title="Subscribe"
+          onPress={() => {
+            //@ts-ignore
+            navigation.navigate('Payment');
+          }}
+        />
       </View>
     </SafeAreaView>
   );

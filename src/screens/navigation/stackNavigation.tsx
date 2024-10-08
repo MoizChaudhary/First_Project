@@ -32,6 +32,10 @@ import ChatScreen from '../Chats';
 import UserList from '../UserList';
 import Privacy from '../Privacy';
 import ContactUs from '../ContactUs';
+import Calendar from '../Calendar';
+import Payment from '../Payment';
+import DeleteAcount from '../DeleteAcc';
+import TermsCondition from '../Terms&Condition';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
@@ -39,7 +43,7 @@ const Navigator = () => {
     <ThemeProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={'SplashScreen'}
+          initialRouteName={'TermsCondition'}
           screenOptions={{
             headerShown: false,
           }}>
@@ -91,6 +95,18 @@ const Navigator = () => {
           <Stack.Screen name={NavigationRoute.DarkMode} component={DarkMode} />
           <Stack.Screen name={NavigationRoute.UserList} component={UserList} />
           <Stack.Screen name={NavigationRoute.Privacy} component={Privacy} />
+          <Stack.Screen name={NavigationRoute.Calendar} component={Calendar} />
+          <Stack.Screen name={NavigationRoute.Payment} component={Payment} />
+          <Stack.Screen
+            name={NavigationRoute.TermsCondition}
+            component={TermsCondition}
+          />
+
+          <Stack.Screen
+            name={NavigationRoute.DeleteAccount}
+            component={DeleteAcount}
+          />
+
           <Stack.Screen
             name={NavigationRoute.ContactUs}
             component={ContactUs}

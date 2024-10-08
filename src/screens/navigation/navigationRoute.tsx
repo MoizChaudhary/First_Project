@@ -28,4 +28,8 @@ export const NavigationRoute = {
   UserList: 'UserList',
   Privacy: 'Privacy',
   ContactUs: 'ContactUs',
+  Calendar: 'Calendar',
+  Payment: 'Payment',
+  DeleteAccount: 'DeleteAccount',
+  TermsCondition: 'TermsCondition',
 };

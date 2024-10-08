@@ -91,4 +91,10 @@ export const Images = {
   sendMessage: require('../images/send.png'),
   gallery: require('../images/gallery.png'),
   video: require('../images/video.png'),
+  left: require('../images/left.png'),
+  right: require('../images/right.png'),
+  p1: require('../images/p1.png'),
+  p2: require('../images/p2.png'),
+  p3: require('../images/p3.png'),
+  p4: require('../images/p4.png'),
 };
